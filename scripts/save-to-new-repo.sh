@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
-  cat <<USAGE >&2
-Usage: $0 <destination-directory>
+DEFAULT_ROOT="../exports"
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+DEFAULT_DEST="$DEFAULT_ROOT/fabio-bot-$TIMESTAMP"
 
-Creates a fresh git repository populated with the current project sources.
-USAGE
-  exit 1
+DEST="${1:-}"
+
+if [[ -z "$DEST" ]]; then
+  mkdir -p "$DEFAULT_ROOT"
+  DEST="$DEFAULT_DEST"
 fi
-
-DEST="$1"
 
 if [[ -e "$DEST" ]]; then
   echo "Error: destination path '$DEST' already exists." >&2
@@ -28,4 +28,11 @@ git archive --format=tar HEAD | tar -x -C "$DEST"
   git commit -m "Initial commit of Fabio bot" >/dev/null
 )
 
-echo "New repository created at $DEST"
+cat <<SUMMARY
+New repository created at: $DEST
+
+Next steps:
+  cd "$DEST"
+  git remote add origin <your-remote-url>
+  git push -u origin main
+SUMMARY

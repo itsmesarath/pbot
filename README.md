@@ -60,15 +60,27 @@ The bot implements three-pillar analysis:
 
 ## 📦 Exporting to a New Repository
 
-Use the helper script to snapshot the current project into a brand-new git repository (useful when you want to publish or share your personalized build):
+Use the helper script to snapshot the current project into a brand-new git repository (useful when you want to publish or share your personalized build). You can let the script choose a timestamped export directory for you:
+
+```bash
+scripts/save-to-new-repo.sh
+```
+
+Or provide a custom destination (parent directories will be created automatically):
 
 ```bash
 scripts/save-to-new-repo.sh ../fabio-new
 ```
 
+Prefer npm scripts? Run:
+
+```bash
+npm run export:new-repo -- ../fabio-new
+```
+
 The script will:
 
-- Create the destination directory if it does not exist yet.
+- Create the destination directory if it does not exist yet (or a timestamped one in `../exports/` when none is provided).
 - Copy the current `HEAD` sources into that directory using `git archive`.
 - Initialize a new git repository and perform the initial commit for you.
 
