@@ -58,6 +58,22 @@ The bot implements three-pillar analysis:
 4. **Open your browser**:
    Navigate to `http://localhost:3000`
 
+## 📦 Exporting to a New Repository
+
+Use the helper script to snapshot the current project into a brand-new git repository (useful when you want to publish or share your personalized build):
+
+```bash
+scripts/save-to-new-repo.sh ../fabio-new
+```
+
+The script will:
+
+- Create the destination directory if it does not exist yet.
+- Copy the current `HEAD` sources into that directory using `git archive`.
+- Initialize a new git repository and perform the initial commit for you.
+
+After it finishes you can `cd` into the new directory, add a remote (e.g., GitHub), and push the freshly created repository.
+
 ## 🔑 Configuration
 
 ### Setting up OpenRouter API Key
