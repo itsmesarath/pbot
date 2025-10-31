@@ -1,6 +1,49 @@
 let tradingViewLoaderPromise = null;
 
+const LOCAL_SCRIPT_URL = '/charting_library/charting_library.js';
 const CDN_SCRIPT_URL = 'https://s3.tradingview.com/tv.js';
+
+const removeScriptIfPresent = (id) => {
+  const existing = document.getElementById(id);
+  if (existing && existing.parentNode) {
+    existing.parentNode.removeChild(existing);
+  }
+};
+
+const injectTradingViewScript = (src, id) =>
+  new Promise((resolve, reject) => {
+    const existing = document.getElementById(id);
+    if (existing) {
+      if (window.TradingView && typeof window.TradingView.widget === 'function') {
+        resolve(window.TradingView);
+        return;
+      }
+
+      // Remove stale script tags so we can retry with a fresh load path.
+      removeScriptIfPresent(id);
+    }
+
+    const script = document.createElement('script');
+    script.id = id;
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = src;
+
+    script.onload = () => {
+      if (window.TradingView && typeof window.TradingView.widget === 'function') {
+        resolve(window.TradingView);
+      } else {
+        reject(new Error('TradingView widget failed to initialise'));
+      }
+    };
+
+    script.onerror = (err) => {
+      removeScriptIfPresent(id);
+      reject(err || new Error('Failed to load TradingView widget script'));
+    };
+
+    document.head.appendChild(script);
+  });
 
 export const loadTradingViewWidget = () => {
   if (typeof window === 'undefined') {
@@ -12,27 +55,20 @@ export const loadTradingViewWidget = () => {
   }
 
   if (!tradingViewLoaderPromise) {
-    tradingViewLoaderPromise = new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.id = 'tradingview-widget-script';
-      script.type = 'text/javascript';
-      script.async = true;
-      script.src = CDN_SCRIPT_URL;
+    tradingViewLoaderPromise = (async () => {
+      const scriptId = 'tradingview-widget-script';
 
-      script.onload = () => {
-        if (window.TradingView && typeof window.TradingView.widget === 'function') {
-          resolve(window.TradingView);
-        } else {
-          reject(new Error('TradingView widget failed to initialise'));
-        }
-      };
+      try {
+        return await injectTradingViewScript(LOCAL_SCRIPT_URL, scriptId);
+      } catch (localError) {
+        console.warn(
+          'Local TradingView Charting Library not found, falling back to CDN.',
+          localError
+        );
+      }
 
-      script.onerror = (err) => {
-        reject(err || new Error('Failed to load TradingView widget script'));
-      };
-
-      document.head.appendChild(script);
-    });
+      return injectTradingViewScript(CDN_SCRIPT_URL, scriptId);
+    })();
   }
 
   return tradingViewLoaderPromise;

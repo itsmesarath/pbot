@@ -289,7 +289,7 @@ const TradingChart = ({
         console.error('Failed to initialise TradingView widget', err);
         if (!cancelled) {
           setChartError(
-            'Unable to load TradingView charting library. Please ensure you have an active internet connection and the TradingView assets are available.'
+            'Unable to load TradingView charting assets. Please ensure you have an active internet connection or provide the local Charting Library bundle.'
           );
           setIsLoading(false);
         }
@@ -385,7 +385,7 @@ const TradingChart = ({
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center rounded-lg bg-red-900/80 px-6 text-center">
           <p className="text-sm font-semibold text-red-100">{chartError}</p>
           <p className="mt-2 text-xs text-red-200">
-            Download the official TradingView Charting Library and place it inside <code>public/charting_library</code>, or fall back to the CDN by updating <code>tradingViewService</code>.
+            Place the official TradingView Charting Library inside <code>public/charting_library</code> or retry once your network connection is restored so the CDN script can load.
           </p>
         </div>
       )}
