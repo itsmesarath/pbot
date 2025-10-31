@@ -72,6 +72,12 @@ Or provide a custom destination (parent directories will be created automaticall
 scripts/save-to-new-repo.sh ../fabio-new
 ```
 
+Need to wire the export straight to a remote repository (e.g., GitHub)? Pass the URL as the second argument and the script will add it as `origin`:
+
+```bash
+scripts/save-to-new-repo.sh ../fabio-new https://github.com/itsmesarath/sentimentai2.git
+```
+
 Prefer npm scripts? Run:
 
 ```bash
@@ -82,9 +88,10 @@ The script will:
 
 - Create the destination directory if it does not exist yet (or a timestamped one in `../exports/` when none is provided).
 - Copy the current `HEAD` sources into that directory using `git archive`.
-- Initialize a new git repository and perform the initial commit for you.
+- Initialize a new git repository, create a `main` branch, and perform the initial commit for you.
+- Optionally add a remote named `origin` when you supply a repository URL as the second argument.
 
-After it finishes you can `cd` into the new directory, add a remote (e.g., GitHub), and push the freshly created repository.
+After it finishes you can `cd` into the new directory and push the freshly created repository (if you provided a remote the script prints the exact `git push` command to run).
 
 ## 🔑 Configuration
 
