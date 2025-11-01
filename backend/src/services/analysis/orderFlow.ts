@@ -4,7 +4,7 @@
  */
 
 import { Candle } from '../../types/broker';
-import { OrderFlowData, AggressionLevel, VolumeClusters } from '../types/strategy';
+import { OrderFlowData, AggressionLevel, VolumeClusters } from '../../types/strategy';
 
 export interface CandleWithDelta extends Candle {
   delta: number; // Buy volume - Sell volume estimate
