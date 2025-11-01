@@ -1,30 +1,30 @@
 {
-  "name": "fabio-trading-bot",
+  "name": "trading-signal-platform",
   "version": "1.0.0",
-  "description": "Real-time trading bot with AI analysis based on Fabio Playbook",
-  "main": "index.js",
+  "description": "Professional trading signal platform using Fabio Playbook and multi-strategy analysis",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "start": "npm start -w backend",
+    "test": "npm test -w backend",
+    "lint": "npm run lint -w backend",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
   },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "lightweight-charts": "^4.1.1",
-    "binance-api-node": "^0.12.5",
-    "axios": "^1.6.2",
-    "zustand": "^4.4.7",
-    "date-fns": "^2.30.0",
-    "recharts": "^2.10.3"
-  },
+  "keywords": ["trading", "signals", "AMT", "volume-profile", "order-flow"],
+  "author": "Trading Platform",
+  "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8",
-    "tailwindcss": "^3.3.6",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
