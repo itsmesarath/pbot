@@ -1,6 +1,12 @@
-# Fabio Trading Bot
+# Trading Signal Platform
 
-A real-time trading bot with AI-powered signal generation based on the **Fabio Playbook** methodology. This application uses Binance market data, TradingView Lightweight Charts for visualization, and OpenRouter AI for intelligent trade analysis.
+A professional, multi-strategy trading signal generation platform implementing the **Fabio Playbook**, **Grid Trading**, and **Mean Reversion** strategies with real-time market data analysis from Binance.
+
+This is a production-ready platform with:
+- **Backend API**: TypeScript/Express for signal generation
+- **Frontend Dashboard**: React UI for real-time monitoring
+- **Multi-Strategy**: Parallel execution of 3 complementary trading strategies
+- **Advanced Analysis**: Volume Profile, Order Flow, Multi-timeframe confluence
 
 ## 🚀 Features
 
