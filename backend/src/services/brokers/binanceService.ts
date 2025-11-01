@@ -5,7 +5,7 @@
 import axios, { AxiosInstance } from 'axios';
 import WebSocket from 'ws';
 import { BaseBrokerService } from './baseBrokerService';
-import { Candle, Ticker } from '../types/broker';
+import { Candle, Ticker } from '../../types/broker';
 import pino from 'pino';
 
 const logger = pino();
